@@ -9,11 +9,11 @@ The ability to remember and internally represent events is often accompanied by 
 
 # Data
 
-[`data`](https://github.com/memobc/paper-vividness-features/blob/data) per participant were saved as a csv file with trial information and corresponding responses per row.
+[`data`](https://github.com/memobc/paper-vividness-features/tree/main/data) per participant were saved as a csv file with trial information and corresponding responses per row.
 
 # Code
 
-Jupyter notebooks in the [`code`](https://github.com/memobc/paper-vividness-features/blob/data) folder contain all analyses for the within-experiment analyses and the individual differences analyses. Separate `.py` files provide custom functions to the notebooks. Data are loaded in from the `data` folder.
+Jupyter notebooks in the [`code`](https://github.com/memobc/paper-vividness-features/tree/main/code) folder contain all analyses for the within-experiment analyses and the individual differences analyses. Separate `.py` files provide custom functions to the notebooks. Data are loaded in from the `data` folder.
 * `vividness_analysis_Exp[1/2/3].ipynb`: runs analyses within each experiment, first quality-checking the data, and then analyzing the relationship between event attributes and memory vividness. Each notebook also provides an overview of the task design.
 * `individual_differences_analysis.ipynb`: runs analyses across all participants, testing how mean memory performance is related to subjective evaluations of memory, and if the *pattern* of relationships between objective and subjective memory measures differs across individuals.
 
