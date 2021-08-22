@@ -1,0 +1,7 @@
+# Data descriptor: Vividness Features experiments
+
+/experiment[1/2/3]/ contains one csv per participant, with data per trial
+
+included_participants_exp[1/2/3].csv lists the full paths (relative to the code folder) of data files for all participants that were included in the analyses (after quality assessment).
+
+questionnaire_data_exp[1/2/3].csv contains the questionnaire responses to the SAM and VVIQ for all included participants.
