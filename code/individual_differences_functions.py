@@ -68,7 +68,7 @@ def create_memory_data(my_data):
 
     # format column names so not tuples
     viv_columns = vividness_data.columns[4:10]
-    vividness_data.columns = ["participant","group","event","vividness"] + ['_'.join(i) for i in viv_columns]
+    vividness_data.columns = vividness_data.columns[0:4].tolist() + ['_'.join(i) for i in viv_columns]
     
     return vividness_data
 # -------------------------------------- #
@@ -84,16 +84,12 @@ def vividness_correlations(vividness_data, features):
                         columns=['group'] + features)
     for p in vividness_data['participant'].unique():
         sub_data = vividness_data[vividness_data['participant'] == p]
-        
-        for t in features:
-            this_cor = sub_data[["vividness",t]].corr(method="spearman").loc["vividness",t].astype('float')
-            #remove if no variance in either variable
-            if any(np.std(sub_data[["vividness",t]]) == 0):
-                this_cor = 0
-            elif np.abs(np.round(this_cor,1)) == 1:
-                this_cor = 0
-                
-            cors.loc[p,t] = this_cor
+
+        # correlate with vividness
+        sub_cors = sub_data[["vividness"] + features].corr(method="spearman").loc["vividness",features].astype('float')
+        cors_idx = (np.isnan(sub_cors)) | (np.round(np.abs(sub_cors),1) == 1)
+        sub_cors[cors_idx] = 0
+        cors.loc[p,features] = sub_cors
         
         # add group
         cors.loc[p,'group'] = sub_data.group.tolist()[0]

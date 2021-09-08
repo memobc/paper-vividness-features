@@ -1,7 +1,7 @@
 # Stores all functions for the single experiment (within-subject) analyses
 # testing the relationship between vividness and memory attributes
 
-# Rose Cooper - August 2021
+# Rose Cooper - September 2021
 
 #########################################
 
@@ -152,7 +152,7 @@ def format_memory_data(my_data):
 
     # format column names so not tuples
     viv_columns = memory_data.columns[3:9]
-    memory_data.columns = ["participant","event","vividness"] + ['_'.join(i) for i in viv_columns]
+    memory_data.columns = memory_data.columns[0:3].tolist() + ['_'.join(i) for i in viv_columns]
 
     return memory_data
 # -------------------------------------- #
@@ -162,21 +162,18 @@ def format_memory_data(my_data):
 def vividness_correlations(vividness_data, features):
     # runs within-subject correlations between vividness
     # and (continuous) memory attributes
-    # returns r
+    # returns spearman r
     
     cors = pd.DataFrame(index=vividness_data['participant'].unique(),
-                       columns=features)
+                        columns=features)
     for p in vividness_data['participant'].unique():
         sub_data = vividness_data[vividness_data['participant'] == p]
-        
-        for t in features:
-            this_cor = sub_data[["vividness",t]].corr(method="spearman").loc["vividness",t].astype('float')
-            #remove if no variance in either variable, or unrealistically high correlation
-            if any(np.std(sub_data[["vividness",t]]) == 0):
-                this_cor = 0
-            elif np.round(np.abs(this_cor),1) == 1:
-                this_cor = 0    
-            cors.loc[p,t] = this_cor
+
+        # correlate with vividness
+        sub_cors = sub_data[["vividness"] + features].corr(method="spearman").loc["vividness",features].astype('float')
+        cors_idx = (np.isnan(sub_cors)) | (np.round(np.abs(sub_cors),1) == 1)
+        sub_cors[cors_idx] = 0
+        cors.loc[p,features] = sub_cors
 
     return cors.reset_index()
 # -------------------------------------- #
@@ -189,7 +186,7 @@ def fetch_sig_cors(subject_cors, group_cors, sym=True):
     # * = p < .05 bonferroni-corrected
     # sym = True (symmetrical cor matrix)
     
-    # mark significant ones and plot:
+    # get alpha (corrected):
     x_var = group_cors.shape[0]
     y_var = group_cors.shape[1]
     if sym:
