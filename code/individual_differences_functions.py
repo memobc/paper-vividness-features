@@ -1,7 +1,7 @@
 # Stores all functions for the individual differences analyses
 # testing the relationship between vividness and memory attributes
 
-# Rose Cooper - August 2021
+# Rose Cooper - September 2021
 
 #########################################
 
