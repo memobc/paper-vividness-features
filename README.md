@@ -1,7 +1,7 @@
 # The Paper
 This repository includes data and code for the following paper:
 
-**Cooper, R.A. & Ritchey, M. (under review). Patterns of episodic content and specificity predicting subjective memory vividness.**
+**[Cooper, R.A. & Ritchey, M. (under review). Patterns of episodic content and specificity predicting subjective memory vividness](https://psyarxiv.com/gux43)**
 
 # Abstract
 
